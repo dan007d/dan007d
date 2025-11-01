@@ -1,16 +1,13 @@
-## Hi there 👋
+## What you'll find here
 
-<!--
-**dan007d/dan007d** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+A collection of open source QoL Cheat Engine scripts I made for Dark Souls 3. Just download the .CT table for the script of interest!
 
-Here are some ideas to get you started:
+#### Blue Sentinel desync bug fix
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+Development for the Blue Sentinel mod was ended at 06/03/2025, however, some bugs still remain. 
+This script patches a bug causing players to always become desynced to each other when playing in long, uninterrupted multiplayer sessions.
+The patch is active as long as the script is kept activate!
+
+
+
+
