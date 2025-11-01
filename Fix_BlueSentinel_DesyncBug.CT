@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2000004288</ID>
+      <Description>"Fix BS Desync"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+   Fixes a bug with Blue Sentinel that causes players to desync and freeze
+     after playing in the same world for a long time.
+
+   Keep the script on.
+
+   dan007d - 2025.10.27
+}
+
+{$lua}
+if syntaxcheck then return end
+[ENABLE]
+
+-- very bloated script, but BS can have different names
+--   depending on how it's installed, so I do all this
+--   hacky code to support any custom DLL name while also
+--   ensuring its code is compatible with my patch.
+
+local function isBlueSentinel(base)
+  if not base then return nil end
+  if readQword(base+0x174ad) == 0x00B0BD8948C78948 then
+    if readQword(base+0x6c770) == 0x2444894C38EC8348 then
+      if readQword(base+0x145b36) == 0x4C084AB70F028B4C then
+        return true
+      end
+    end
+  end
+  return false
+end
+
+local DLL_list, name, base
+
+-- test for common names
+base = getAddressSafe("DINPUT8.dll")
+if isBlueSentinel(base) then goto FoundBlueSentinel end
+base = getAddressSafe("bluesentinel.dll")
+if isBlueSentinel(base) then goto FoundBlueSentinel end
+
+
+-- couldnt find, scan through all loaded DLLs
+DLL_list = enumModules()
+if not DLL_list then error("Could not find DLLs. Is CE attached?") end
+
+for _, dll in ipairs(DLL_list) do
+  base = dll.Address or dll.BaseAddress
+  if isBlueSentinel(base) then goto FoundBlueSentinel end
+end
+error("Could not find Blue Sentinel. Is the mod loaded? Is it v2.02?")
+
+
+-- found BS, now patch it
+::FoundBlueSentinel::
+
+BlueSentinelModBase = base
+registerSymbol(BlueSentinelModBase)
+
+
+autoAssemble([[
+alloc(BSFreezeBugFix,0x800,BlueSentinelModBase+5EA92)
+registersymbol(BSFreezeBugFix)
+define(CAl,BSFreezeBugFix+200)
+label(ReturnToGameCode)
+
+BSFreezeBugFix:
+ push rax
+ push rbx
+ push rcx
+ //push rdx
+ push rsi
+ push rdi
+ push r8
+ push r9
+ push r10
+ push r11
+ push r12
+ push r13
+ push r14
+ push r15
+ sub rsp,58
+ mov rcx,rbx
+ lea rdx,[CAl]
+ movzx r8d,word ptr [r14+01]
+ call DarkSoulsIII.exe+199C1D0
+ mov rdx,[CAl]
+ shl rdx,10
+ add rsp,58
+ pop r15
+ pop r14
+ pop r13
+ pop r12
+ pop r11
+ pop r10
+ pop r9
+ pop r8
+ pop rdi
+ pop rsi
+ //pop rdx
+ pop rcx
+ pop rbx
+ pop rax
+jmp ReturnToGameCode
+
+BlueSentinelModBase+5EA92:
+jmp BSFreezeBugFix
+BlueSentinelModBase+5EA9B:
+ReturnToGameCode:
+]])
+
+
+
+[DISABLE]
+if not BlueSentinelModBase then return end
+
+autoAssemble([[
+BlueSentinelModBase+5EA92:
+db 41 0F B7 56 01
+//movzx edx,word ptr [r14+01]
+
+dealloc(BSFreezeBugFix)
+unregistersymbol(BSFreezeBugFix)
+]])
+
+unregisterSymbol(BlueSentinelModBase)
+
+BlueSentinelModBase = nil
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
