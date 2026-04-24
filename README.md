@@ -17,7 +17,7 @@ Patches a bug causing players to always become desynced to each other when playi
 The patch is active as long as the script is kept activate!
 
 ### - [🔗 No BS kick on estus cancel](https://raw.githubusercontent.com/dan007d/dan007d/refs/heads/main/NoEstusCancelBSKick.txt)
-Prevents people's Blue Sentinel from detecting your estus cancels, avoiding unfair kicks. 
+Prevents other's Blue Sentinel from detecting your estus cancels, avoiding unfair kicks. 
 It works as long as the script is kept active!
 
 #### (More coming soon)
