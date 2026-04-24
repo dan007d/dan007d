@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2000009991</ID>
+      <Description>"no BS kick on estus cancel"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>//  BS kicking estus cancel is cheating.
+//  Protection script by dan007d
+[ENABLE]
+alloc(NoEstusCancelBSKick,2048,"DarkSoulsIII.exe"+78EEA4)
+registersymbol(NoEstusCancelBSKick)
+define(nbsk,NoEstusCancelBSKick)
+define(wef,nbsk+500)
+define(fps_,nbsk+508)
+define(fpd_,nbsk+600)
+label(rth)
+label(jmp_l)
+label(jmp_1)
+
+wef:
+db 00
+fps_:
+dd 4f
+fpd_:
+db 1f 02 b7 0a 00 03 b6 0a 00 03 0c 07 0c 00 00 00 5a 02 00 00 00 00 5b 02 22 00 00 00 5c 02 0c 00 00 00 5e 02 00 00 00 00 5f 02 22 00 00 00 60 02 2a 00 00 00 d6 02 03 00 00 00 00 8a 02 00 00 00 00 8c 02 00 00 00 00 93 02 00 01 00 00 00 00
+
+nbsk:
+mov rdx,rbx
+mov rcx,r12
+cmp r8d,18
+jne rth
+push rax
+mov ax,[r9+2]
+cmp ax,0787
+je jmp_1
+cmp ax,0ab9
+je jmp_l
+cmp ax,0979
+je jmp_l
+cmp ax,0831
+je jmp_l
+pop rax
+mov byte ptr [wef],00
+jmp rth
+jmp_1:
+pop rax
+cmp byte ptr [wef],01
+jne rth
+push rcx
+push rdx
+push r8
+push r9
+sub rsp,50
+lea r9,[fpd_]
+mov eax,[fps_]
+mov [rsp+20],eax
+call DarkSoulsIII.exe+78EB90
+add rsp,50
+pop r9
+pop r8
+pop rdx
+pop rcx
+jmp rth
+jmp_l:
+pop rax
+mov byte ptr [wef],01
+jmp rth
+DarkSoulsIII.exe+78EEA4:
+jmp nbsk
+nop
+rth:
+
+[DISABLE]
+dealloc(NoEstusCancelBSKick)
+unregistersymbol(NoEstusCancelBSKick)
+DarkSoulsIII.exe+78EEA4:
+db 48 8B D3 49 8B CC
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
