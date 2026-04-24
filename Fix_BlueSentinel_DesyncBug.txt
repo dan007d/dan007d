@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheatTable CheatEngineTableVersion="45">
+<CheatTable>
   <CheatEntries>
     <CheatEntry>
       <ID>2000004288</ID>
       <Description>"Fix BS Desync"</Description>
+      <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{
    Fixes a bug with Blue Sentinel that causes players to desync and freeze
@@ -134,5 +135,4 @@ BlueSentinelModBase = nil
 </AssemblerScript>
     </CheatEntry>
   </CheatEntries>
-  <UserdefinedSymbols/>
 </CheatTable>
