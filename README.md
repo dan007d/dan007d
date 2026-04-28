@@ -6,7 +6,7 @@ A collection of open source QoL Cheat Engine scripts I made for Dark Souls 3.
 - Click on the blue script of interest below.
 - Select (Ctrl+A) the whole text.
 - Copy (Ctrl+C).
-- Paste (ctrl+V) into your actively opened CE table window.
+- Paste (Ctrl+V) into your actively opened CE table window.
 
 The script should appear under your last blue highlighted CE entry.
 
